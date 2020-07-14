@@ -34,9 +34,9 @@
     "dotenv": "^8.2.0",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
+    "path": "^0.12.7",
     "sequelize": "^6.3.3",
     "swagger-express-ts": "^1.0.1",
-    "swagger-ui": "^3.28.0",
     "swagger-ui-dist": "^3.28.0",
     "typescript": "^3.9.6",
     "typescript-rest-swagger": "^1.1.1"

@@ -2,6 +2,9 @@ import express, { Application, Request, Response, NextFunction } from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import { json, urlencoded} from 'body-parser'
+import path from 'path'
+import * as swagger from 'swagger-express-ts'
+import { SwaggerDefinitionConstant } from 'swagger-express-ts'
  
 import indexRoutes from './routes/index.route'
 import petsRoutes from './routes/pets.route'
@@ -37,10 +40,44 @@ export default class Server{
         this.app.use(indexRoutes)
         this.app.use(petsRoutes)
         
+        // API DOCS
+        this.app.use('/api-docs', express.static(path.join(__dirname, 'api-docs')))
+        this.app.use('/api-docs/swagger/assets', express.static('node_modules/swagger-ui-dist'))
+        this.app.use(swagger.express({
+            definition: {
+                info: {
+                    title: 'My api',
+                    version: '1.0',
+                },
+                models:{
+                    Pet: {
+                        description: '',
+                        properties:{
+                            id: {
+                                type: SwaggerDefinitionConstant.INTEGER
+                                , required: false
+                            },
+                            name: {
+                                type: SwaggerDefinitionConstant.STRING
+                                , required: true
+                            },
+                            tag: {
+                                type: SwaggerDefinitionConstant.STRING
+                                , required: true
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {}
+                },
+            },
+        }))
+
+        // Not allowed
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.status(403).send({error: 'Method not allow'})
         })
-
     }
 
     public start(){

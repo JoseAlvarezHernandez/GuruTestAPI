@@ -27,8 +27,9 @@ export default class PetsController{
 
     static async getAPet(request: Request, response:Response) {
         try{
-            const {id} = request.params
-            const pet = await pets.findByPk(id)
+            const {petId} = request.params
+            console.log(request.params)
+            const pet = await pets.findByPk(petId)
             
             if(pet === null)
                 response.status(204).send()

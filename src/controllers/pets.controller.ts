@@ -1,12 +1,10 @@
 import { Request, Response } from 'express'
-import { auth, close } from './../connection'
 import pets from './../models/pets.model'
 
 export default class PetsController{
-    static async getAllPets(request: Request, response:Response) {
+    static async getAllPets(request: Request, response:Response): Promise<void> {
         try{
-            const limit: any = request?.query?.limit || 20
-            const pet = await pets.findAll({ limit: Number(limit) })
+            const pet = await pets.findAll({ limit: Number(request?.query?.limit || 20) })
             pet === null ?
                 response.status(204).send() :
                 response.status(200).send(pet)
@@ -15,17 +13,17 @@ export default class PetsController{
         }
     }
 
-    static async createAPet(request: Request, response: Response){
+    static async createAPet(request: Request, response: Response): Promise<void>{
         try{
             const {name, tag} = request.body
-            const pet = await pets.create({name, tag})
+            await pets.create({name, tag})
             response.status(201).send()
         }catch(err){
             response.status(403).send({errMsg: err?.errors[0]?.message})
         }
     }
 
-    static async getAPet(request: Request, response:Response) {
+    static async getAPet(request: Request, response:Response): Promise<void> {
         try{
             const {petId} = request.params
             console.log(request.params)

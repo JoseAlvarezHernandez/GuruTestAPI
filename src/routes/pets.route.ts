@@ -7,11 +7,12 @@ import { ApiOperationGet, ApiPath, ApiOperationPost, SwaggerDefinitionConstant }
     path: '/api/pets',
     name: 'pets'
 })
-class PetsRoutes{
-    router: Router
-    path: string = '/api/pets'
 
-    constructor(petsController: PetsController = new PetsController()){
+export class PetsRoutes{
+    router: Router
+    path = '/api/pets'
+
+    constructor(){
         this.router = Router()
         this.routes()
     }
@@ -31,7 +32,7 @@ class PetsRoutes{
             200: { model: 'Pet', type: SwaggerDefinitionConstant.ARRAY}
         }
     })
-    getAll(){
+    getAll(): void{
         this.router.get(this.path, PetsController.getAllPets)
     }
 
@@ -48,7 +49,7 @@ class PetsRoutes{
         }
     })
 
-    createPet(){
+    createPet(): void{
         this.router.post(this.path, PetsController.createAPet)
     }
 
@@ -69,11 +70,11 @@ class PetsRoutes{
             'Default': { description: 'unexpected error'}
         }
     })
-    getAPet(){
+    getAPet(): void{
         this.router.get(`${this.path}/:petId`, PetsController.getAPet)
     }
 
-    routes(){
+    routes(): void{
         this.getAll()
         this.createPet()
         this.getAPet()

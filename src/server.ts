@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
+import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import { json, urlencoded} from 'body-parser'
@@ -18,11 +18,11 @@ export default class Server{
         this.routes()
     }
 
-    public config(){
+    public config(): void{
         this.app.set('port', process.env.PORT || 3000)
     }
     
-    public routes(){
+    public routes(): void{
         this.app.use(morgan('dev'))
         this.app.use(helmet())
         // Middleware
@@ -75,12 +75,12 @@ export default class Server{
         }))
 
         // Not allowed
-        this.app.use((req: Request, res: Response, next: NextFunction) => {
+        this.app.use((req: Request, res: Response) => {
             res.status(403).send({error: 'Method not allow'})
         })
     }
 
-    public start(){
+    public start(): void{
         this.app.listen(this.app.get('port'), () => console.log(`Server running on port ${this.app.get('port')}`) )
     }
 }

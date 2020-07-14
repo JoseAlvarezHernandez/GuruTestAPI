@@ -11,11 +11,13 @@ export const connection = new Sequelize(DB_NAME, DB_USER, DB_PW, {
     pool: {max: 100, min: 1}
 })
 
-export const auth = async () => {
+export const auth = async (): Promise<void> => {
     await connection.sync()
     connection.authenticate().then(() => console.log('Database connected...')).catch(err => console.log(err))
 }
 
-export const close = async () => await connection.close()
+export const close = async (): Promise<void> => {
+    await connection.close()
+}
 
 auth()

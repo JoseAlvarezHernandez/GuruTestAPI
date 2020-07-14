@@ -1,4 +1,4 @@
-import express, { Router, Application } from 'express'
+import express, { Router, Application, Request, Response, NextFunction } from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
 
@@ -23,6 +23,10 @@ export default class Server{
         this.app.use(petsRoutes)
         this.app.use(morgan('dev'))
         this.app.use(helmet())
+        // Middleware
+        this.app.use((req: Request, res: Response, next: NextFunction) => {
+            res.status(403).send({error: 'Method not allow'})
+        })
     }
 
     public start(){

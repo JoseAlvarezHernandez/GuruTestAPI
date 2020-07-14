@@ -13,6 +13,7 @@ class PetsRoutes{
 
     routes(){
         this.router.get(this.path, PetsController.getAllPets)
+        this.router.post(this.path, PetsController.createAPet)
     }
 }
 

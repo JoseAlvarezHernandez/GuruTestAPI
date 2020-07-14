@@ -6,4 +6,8 @@ export default class PetsController{
         
         response.status(200).send({status:'up'})
     }
+
+    static async createAPet(request: Request, response: Response){
+        response.status(201).send({created: true})
+    }
 }

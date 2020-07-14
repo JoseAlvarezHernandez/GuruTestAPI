@@ -46,5 +46,9 @@ and then
 npm run start:dev
 ```
 
+6. PostMan
+
+[Link for the request](https://www.getpostman.com/collections/6536635241b859b3a232)
+
 You are all set up!!
 good luck

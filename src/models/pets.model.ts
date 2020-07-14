@@ -12,3 +12,5 @@ const pets = connection.define('Pets', {
         allowNull: false
     }
 })
+
+export default pets

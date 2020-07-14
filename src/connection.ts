@@ -6,13 +6,10 @@ const DB_USER: string = process.env.DB_USER || ''
 const DB_PW: string = process.env.DB_PW || ''
 
 export const connection = new Sequelize(DB_NAME, DB_USER, DB_PW, {
-    host: DB_HOST
+    host: DB_HOST,
+    dialect: 'mysql'
 })
 
-export const auth = connection.authenticate()
+export const auth = async () => await connection.authenticate()
 
-export const close = connection.close()
-
-export async function syncTables(){
-    await connection.sync()
-}
+export const close = async () => await connection.close()

@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import { json, urlencoded} from 'body-parser'
-
+ 
 import indexRoutes from './routes/index.route'
 import petsRoutes from './routes/pets.route'
 
@@ -20,8 +20,6 @@ export default class Server{
     }
     
     public routes(){
-        this.app.use(indexRoutes)
-        this.app.use(petsRoutes)
         this.app.use(morgan('dev'))
         this.app.use(helmet())
         // Middleware
@@ -35,10 +33,14 @@ export default class Server{
             limit: 1024 * 1024,
             type: 'application/json'
         }))
+    
+        this.app.use(indexRoutes)
+        this.app.use(petsRoutes)
         
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.status(403).send({error: 'Method not allow'})
         })
+
     }
 
     public start(){

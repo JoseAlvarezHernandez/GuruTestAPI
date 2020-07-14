@@ -10,6 +10,11 @@ export const connection = new Sequelize(DB_NAME, DB_USER, DB_PW, {
     dialect: 'mysql'
 })
 
-export const auth = async () => await connection.authenticate()
+export const auth = async () => {
+    await connection.sync()
+    connection.authenticate().then(() => console.log('Database connected...')).catch(err => console.log(err))
+}
 
 export const close = async () => await connection.close()
+
+auth()

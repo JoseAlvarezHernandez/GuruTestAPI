@@ -5,14 +5,13 @@ import pets from './../models/pets.model'
 export default class PetsController{
     static async getAllPets(request: Request, response:Response) {
         try{
-            const pet = await pets.findAll()
-            
-            if(pet === null)
-                response.status(204).send()
-            else
+            const limit: any = request?.query?.limit || 20
+            const pet = await pets.findAll({ limit: Number(limit) })
+            pet === null ?
+                response.status(204).send() :
                 response.status(200).send(pet)
         }catch(err){
-            response.status(403).send({errMsg: err?.errors[0]?.message})
+            response.status(403).send(err)
         }
     }
 

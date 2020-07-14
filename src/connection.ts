@@ -7,7 +7,8 @@ const DB_PW: string = process.env.DB_PW || ''
 
 export const connection = new Sequelize(DB_NAME, DB_USER, DB_PW, {
     host: DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    pool: {max: 100, min: 1}
 })
 
 export const auth = async () => {
